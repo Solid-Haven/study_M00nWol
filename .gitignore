@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 .vscode/
+1-FaceMasking/frames/
 
 # C extensions
 *.so
