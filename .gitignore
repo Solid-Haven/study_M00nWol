@@ -1,6 +1,7 @@
 .vscode/
 1-FaceMasking/frames/
 1-FaceMasking/encrypted_frames/
+1-FaceMasking/decrypted_frames/
 *.mp4
 *.enc
 
