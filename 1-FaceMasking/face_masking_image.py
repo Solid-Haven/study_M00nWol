@@ -1,36 +1,32 @@
-import cv2
 import os
+import cv2
 
-# 현재 스크립트와 동일한 디렉토리 내의 이미지 경로 설정
-image_path = os.path.join(os.path.dirname(__file__), 'sample.jpg')
 
-# 이미지 로드 및 표시
-image = cv2.imread(image_path)
+## 영상 파일 경로 설정
+video_path = os.path.join(os.path.dirname(__file__), 'sample_video.mp4')
 
-## 얼굴 인식 모델 로드 (Haar Cascades)
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+## 영상 파일 불러오기
+cap = cv2.VideoCapture(video_path)
 
-## 그레이스케일로 변환 (얼굴 인식에 유리)
-gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+## 프레임을 저장할 디렉토리 생성
+output_dir = os.path.join(os.path.dirname(__file__), 'frames')
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
 
-## 얼굴 감지 
-faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+frame_count = 0
 
-## 감지된 얼굴에 블러링 적용
-for (x, y, w, h) in faces:
-    face_region = image[y:y+h, x:x+w]
-    blurred_face = cv2.GaussianBlur(face_region, (99, 99), 30)
-    image[y:y+h, x:x+w] = blurred_face
+while cap.isOpened():
+    ret, frame = cap.read()
+    if not ret:
+        break
 
-## 블러 처리된 이미지 저장 경로 설정
-output_image_path = os.path.join(os.path.dirname(__file__), 'blurred_sample.jpg')
+    ## 프레임 저장
+    frame_path = os.path.join(output_dir, f'frame_{frame_count}.png')
+    cv2.imwrite(frame_path, frame)
+    frame_count += 1
 
-## 처리된 이미지 저장
-cv2.imwrite(output_image_path, image)
-
-## 결과 출력
-cv2.imshow('Face Masking', image)
-cv2.waitKey(0)
+cap.release()
 cv2.destroyAllWindows()
 
-print(f"이미지가 {output_image_path}에 저장되었습니다.")
+
+print(f"총 {frame_count}개의 프레임이 저장되었습니다.")
