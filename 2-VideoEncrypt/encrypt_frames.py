@@ -1,3 +1,5 @@
+## 2_encrypt_frames.py
+
 import os
 import hashlib
 from Crypto.Cipher import AES
