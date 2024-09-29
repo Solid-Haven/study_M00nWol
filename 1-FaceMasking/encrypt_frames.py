@@ -2,6 +2,7 @@ import os
 import hashlib
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
+import shutil
 
 # AES 암호화에 사용할 키 설정 (32바이트 = 256비트)
 key = hashlib.sha256(b'secret_key').digest()
@@ -37,6 +38,16 @@ def encrypt_all_frames(input_dir, output_dir, key):
         frame_count += 1
 
     print(f"총 {frame_count}개의 프레임이 암호화되었습니다.")
+
+    # FPS 파일 복사
+    fps_file_path = os.path.join(input_dir, 'fps.txt')
+    if os.path.exists(fps_file_path):
+        output_fps_path = os.path.join(output_dir, 'fps.txt')
+        shutil.copy(fps_file_path, output_fps_path)
+        print(f"FPS 파일이 '{output_fps_path}'로 복사되었습니다.")
+    else:
+        print("FPS 파일을 찾을 수 없습니다.")
+
 
 # 실행 예시
 if __name__ == "__main__":
