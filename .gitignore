@@ -1,6 +1,8 @@
 .vscode/
 1-FaceMasking/frames/
+1-FaceMasking/encrypted_frames/
 *.mp4
+*.enc
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
