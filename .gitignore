@@ -1,9 +1,12 @@
+.vscode/
+1-FaceMasking/frames/
+.mp4
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-.vscode/
-1-FaceMasking/frames/
+
 
 # C extensions
 *.so
