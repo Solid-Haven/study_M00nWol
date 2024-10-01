@@ -1,7 +1,7 @@
 .vscode/
-2-VideoEncrypt/frames/
-2-VideoEncrypt/encrypted_frames/
-2-VideoEncrypt/decrypted_frames/
+frames/
+encrypted_frames/
+decrypted_frames/
 *.mp4
 *.enc
 

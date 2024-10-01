@@ -1,3 +1,5 @@
+## main
+
 import os
 import hashlib
 from save_frames_with_face_blur import save_frames_with_face_blur
@@ -15,9 +17,13 @@ def main():
     # 1. 비디오에서 프레임 추출
     video_path = os.path.join(current_dir, 'sample_video.mp4')
     frames_dir = os.path.join(current_dir, 'frames')
-    face_cascade_path = os.path.join(current_dir, 'haarcascade_frontalface_default.xml')  # 얼굴 탐지 XML 파일 경로
+    
+    # DNN 얼굴 인식 모델 경로
+    model_path = os.path.join(current_dir, 'res10_300x300_ssd_iter_140000_fp16.caffemodel')
+    config_path = os.path.join(current_dir, 'deploy.prototxt.txt')
+    
     print("1단계: 비디오에서 프레임을 추출합니다...")
-    save_frames_with_face_blur(video_path, frames_dir,face_cascade_path)
+    save_frames_with_face_blur(video_path, frames_dir, model_path, config_path)
 
     # 2. 프레임을 암호화
     encrypted_frames_dir = os.path.join(current_dir, 'encrypted_frames')
