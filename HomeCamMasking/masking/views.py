@@ -1,29 +1,35 @@
 # masking/views.py
 
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from .masker import apply_mask
 import cv2
 import numpy as np
-import boto3
+import os
+from django.conf import settings
+from datetime import datetime
 
+@csrf_exempt
 def mask_video_frame(request):
-    if request.method == 'POST' and request.FILES['frame']:
-        try:
-            frame_file = request.FILES['frame'].read()
-            np_frame = np.frombuffer(frame_file, np.uint8)
-            frame = cv2.imdecode(np_frame, cv2.IMREAD_COLOR)
+    if request.method == 'POST' and request.FILES.get('frame'):
+        frame_file = request.FILES['frame'].read()
+        np_frame = np.frombuffer(frame_file, np.uint8)
+        frame = cv2.imdecode(np_frame, cv2.IMREAD_COLOR)
 
-            # AI 마스킹 함수 호출
-            masked_frame = apply_mask(frame)
+        # 마스킹 처리
+        masked_frame = apply_mask(frame)
 
-            # EC2 내 test 폴더에 마스킹된 프레임 저장
-            frame_count = request.POST.get('frame_count', '0')  # 프레임 번호를 받아서 파일 이름에 추가
-            output_path = f"/home/ec2-user/test/masked_frame_{frame_count}.jpg"
-            cv2.imwrite(output_path, masked_frame)
+        # 서버에 저장할 파일 경로 생성
+        timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
+        file_name = f"masked_{timestamp}.jpg"
+        save_path = os.path.join(settings.MEDIA_ROOT, file_name)
+        os.makedirs(os.path.dirname(save_path), exist_ok=True)
 
-            return JsonResponse({'status': 'success', 'saved_path': output_path})
-    
-        except Exception as e:
-            return JsonResponse({'status': 'failed', 'error': str(e)}, status=500)
-        
-    return JsonResponse({'status': 'failed', 'error': 'No frame found or wrong method'}, status=400)
+        # 마스킹된 프레임을 파일로 저장
+        cv2.imwrite(save_path, masked_frame)
+
+        # 파일의 상대 경로 URL을 클라이언트에게 반환
+        file_url = f"{settings.MEDIA_URL}{file_name}"
+        return JsonResponse({'status': 'success', 'file_url': file_url})
+
+    return JsonResponse({'status': 'failed'}, status=400)

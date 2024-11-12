@@ -4,6 +4,8 @@ encrypted_frames/
 decrypted_frames/
 *.mp4
 *.enc
+*.pem
+*.jpg
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
