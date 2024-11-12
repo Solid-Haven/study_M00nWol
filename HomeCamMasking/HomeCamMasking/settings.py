@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-yt+$-(q2iloymx-(sy*+53&7vp#q5a0f_imq@86&m0om+x^ie@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['3.38.106.115', 'localhost']
 
 
 # Application definition
@@ -124,16 +124,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# ASGI 설정
-ASGI_APPLICATION = 'HomeCamMasking.asgi.application'
-
-# Channels Redis 설정
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            'hosts': [('127.0.0.1', 6379)],  # AWS EC2 인스턴스에서 실행 중인 Redis 서버
-        },
-    },
-}
