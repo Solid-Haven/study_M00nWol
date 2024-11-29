@@ -1,6 +1,6 @@
 import os
 
-def rename_images(folder_path, prefix="sample"):
+def rename_images(folder_path, prefix="sample_"):
     # 폴더에 있는 파일 목록 가져오기
     files = os.listdir(folder_path)
     

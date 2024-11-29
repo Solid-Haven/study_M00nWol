@@ -2,6 +2,7 @@ import cv2
 import mediapipe as mp
 import json
 import os
+import numpy as np
 
 # 데이터셋 폴더 경로 설정
 dataset_folder = "dataset/raw"  # 원본 샘플 이미지가 있는 폴더
@@ -16,6 +17,7 @@ for folder in [json_folder, image_folder]:
 # Mediapipe 초기화
 mp_pose = mp.solutions.pose
 pose = mp_pose.Pose(static_image_mode=True)
+
 
 # 랜드마크 이름 정의
 landmark_names = {
@@ -61,7 +63,7 @@ for index, image_file in enumerate(sorted(os.listdir(dataset_folder))):  # 정�
 
     # 순번 추가
     nth_label = f"{index + 1:04d}"  # 4자리 형식 (001, 002, ...)
-    json_output_path = os.path.join(json_folder, f"image_{nth_label}.json")
+    json_output_path = os.path.join(json_folder, f"json_{nth_label}.json")
     image_output_path = os.path.join(image_folder, f"image_{nth_label}.jpg")
 
     # 이미지 경로 설정
@@ -114,8 +116,8 @@ for index, image_file in enumerate(sorted(os.listdir(dataset_folder))):  # 정�
         important_landmarks.append({"id": 34, "name": "Navel", "x": navel_x, "y": navel_y})
 
         # 성기 (Genital)
-        genital_x = (left_hip.x + right_hip.x + left_knee.x + right_knee.x) / 4
-        genital_y = (left_hip.y + right_hip.y + left_knee.y + right_knee.y) / 4
+        genital_x = (left_hip.x + right_hip.x) / 2
+        genital_y = (left_hip.y + right_hip.y) / 2
         important_landmarks.append({"id": 35, "name": "Genital", "x": genital_x, "y": genital_y})
 
         # 복부 (Abdomen)
