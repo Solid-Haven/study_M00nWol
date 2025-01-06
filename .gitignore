@@ -1,14 +1,16 @@
 .vscode/
-frames/
+frame/
 encrypted_frames/
 decrypted_frames/
 *.mp4
 *.enc
 *.pem
 *.jpg
-dataset/
+*.png
+BodyMasking/dataset
 openpose/
 result/
+frames/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
