@@ -22,7 +22,7 @@ const FaceVerify = () => {
         formData.append("user_id", userId.trim());  // 사용자 ID 추가
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/face-verify/`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/detection/face-verify/`, {
                 method: "POST",
                 body: formData,
             });

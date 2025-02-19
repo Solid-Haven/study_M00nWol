@@ -81,7 +81,7 @@ const FaceRegister = () => {
         });
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/face-register/realtime/`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/detection/face-register/realtime/`, {
                 method: "POST",
                 body: formData,
             });
